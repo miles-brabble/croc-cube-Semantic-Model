@@ -5,7 +5,7 @@ It demonstrates how to model dimensions, facts, and metrics for analytical explo
 
 ---
 
-## 🧩 Project Overview
+## Project Overview
 
 The goal of this project is to expose a clean, governed analytics layer for wildlife observation data — specifically crocodile sightings — enabling analysis by species, region, date, and observer.
 
