@@ -1,0 +1,46 @@
+cubes:
+  - name: crocodile_observations_view
+    public: true
+    title: Crocodile Observations
+    description: Curated view over crocodile observations with joined dimensions.
+    # Inherit joins/logic from your fact cube
+    extends: FactCrocodileObs
+    # Use the same base SQL as the fact cube
+    sql: SELECT * FROM "GOLDEN".fact_crocodile_obs
+
+    measures:
+      - name: total_observations
+        type: count
+        title: Total Observations
+
+      - name: avg_length_m
+        sql: observed_length_m              # column on fact table
+        type: avg
+
+      - name: avg_weight_kg
+        sql: observed_weight_kg
+        type: avg
+
+      # ---- Use the actual names from your generated JS cubes ----
+      # Cube names are likely: DimSpecies, DimConservationStatus, DimLocation, DimObserver, DimDates
+      # Dimension names inside them are camelCase (e.g., commonName, observerName, countryRegion, date)
+    dimensions:
+      - name: species
+        sql: ${DimSpecies.commonName}           # <-- CHECK in DimSpecies.js
+        type: string
+
+      - name: conservation_status
+        sql: ${DimConservationStatus.conservationStatus}   # <-- CHECK in DimConservationStatus.js
+        type: string
+
+      - name: region
+        sql: ${DimLocation.countryRegion}        # <-- CHECK in DimLocation.js
+        type: string
+
+      - name: observer
+        sql: ${DimObserver.observerName}         # <-- CHECK in DimObserver.js
+        type: string
+
+      - name: observed_on
+        sql: ${DimDates.dayDate}                    # <-- CHECK in DimDates.js
+        type: time
